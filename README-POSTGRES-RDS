@@ -1,0 +1,7 @@
+psql -h hostname -p 3306 -U user -W TW
+
+select COUNT(datid) from pg_stat_activity where datname='TW';
+
+select datid, state, usename, query_start, application_name, query from pg_stat_activity where datname='TW' and state='idle in transaction';
+
+

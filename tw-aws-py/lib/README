@@ -1,0 +1,1 @@
+In order to use postgres with lambdas, we *have* to set lambdas to python runtime 2.7 and use this psycopg2 directory... it contains pre-build libraries linked with postgresql libraries, as AWS lambdas do not have native support for postgres. More here: https://github.com/jkehler/awslambda-psycopg2

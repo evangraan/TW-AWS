@@ -1,0 +1,44 @@
+Setup an AWS PostgreSQL RDS instance. No fine-tuning required.
+
+Setup an Ubuntu 18.04 instance in AWS and installed pgbouncer.
+
+Configure the system as follows (choose an appropriate LIMIT value, e.g. 999999). Note, pgbouncer needs approximately 2 file descriptors for each connection, so do not set its max client connection size more than LIMIT / 2 (e.g. 450000 for LIMIT 999999 (leave some room for other things on the system as well!)
+
+In /etc/pam.d/common-session add:
+session required pam_limits.so
+
+In /etc/pam.d/common-session-noninteractive add:
+session required pam_limits.so
+
+in /etc/sysctlconf set:
+fs.file-max=LIMIT
+
+In /etc/security/limits.conf:
+root hard nofile LIMIT
+root soft nofile LIMIT
+* hard nofile LIMIT
+* soft nofile LIMIT
+
+Ubuntu has a bug, which causes system limits to be ignored when services are started up using init.d (https://bugs.debian.org/302079) To work around this:
+
+vi /etc/init.d/pgbouncer
+Before the --start that starts up the pgbouncer process, insert:
+ulimit -n LIMIT
+Reboot
+
+Performance achievable:
+max_connections * (1000 / processing_time) * avg_client_seconds_per_query
+
+e.g.
+4000 * (1000/50) * 10 = 800000
+Queries take about 25-50 ms... lets work with 50. Thus 20 queries per second for each connection. With up to 4000 database connections (db.m4.large) this is 80000 queries served per second. If we say out client on average issues one query evey 10 seconds, that means we can support 800000 clients using this configuration. This average needs to be calculated with gameplay.
+
+You can see the what the max connections setting is in PostgreSQL RDS so:
+
+select * from pg_settings where name='max_connections';
+
+To update, go to:
+https://eu-west-1.console.aws.amazon.com/rds/home?region=eu-west-1
+
+Select parameter groups and edit and save max_connections as desired.
+Also reboot the RDS instance. Not reboot can take a long time (10s of minutes)

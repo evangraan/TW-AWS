@@ -1,0 +1,18 @@
+Download the aws cli
+
+configure aws cli access key, secret, default region (eu-west-1):
+aws configure
+aws configure set default.region eu-west-1
+
+---------------------
+
+Use lambd.sh script to create, update or invoke a lambda
+
+---------------------
+
+To pass a GET query parameter to the lambda, in the API Gateway, select the resource, then its Integration and Add a Body Mapping Template. Seect Content-Type as "application/json" and then select from the template drop-down list "Method Request Passthrough"
+
+In the lambda then access it so:
+        galaxyID = event['params']['querystring']['galaxyID']
+
+

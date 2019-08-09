@@ -1,0 +1,22 @@
+TWGetSystemPlanets - planets in a Solar System
+TWSetSystemPlanets - planets in a Solar System
+TWGetGalaxyPlanets - planets in a Galaxy
+TWSetGalaxyPlanets - planets in a Galaxy
+TWGetPlanet - planet
+TWSetPlanet - planet
+TWGetUsers - all users
+TWGetUser - user
+TWSetUser - user
+TWGetSystems - solar systems in a Galaxy
+TWSetSystems - solar systems in a Galaxy
+TWGetSystem - solar system
+TWSetSystem - solar system
+TWGetGalaxy - galaxy (player uID / twitter handle (preferred) / etc...)
+TWGetScores - high scores
+TWSetScore - player
+TWGetTwitter - player twitter
+TWSetTwitter - player twitter
+TWGetEvent - event
+TWSetEvent - event
+TWGetProfile - player profile
+TWSetProfile - player profile
